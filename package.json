@@ -17,6 +17,10 @@
   "bin": {
     "autodrom": "bin/cli.js"
   },
+  "files": [
+    "lib",
+    "bin"
+  ],
   "scripts": {
     "test": "eslint lib"
   },
