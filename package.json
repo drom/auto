@@ -1,0 +1,40 @@
+{
+  "name": "autodrom",
+  "version": "0.1.0",
+  "description": "auto verilog from comments",
+  "author": "Aliaksei Chapyzhenka",
+  "license": "MIT",
+  "homepage": "https://github.com/drom/autodrom#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drom/autodrom.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/drom/autodrom/issues"
+  },
+  "main": "lib",
+  "bin": {
+    "autodrom": "bin/cli.js"
+  },
+  "scripts": {
+    "test": "eslint lib"
+  },
+  "engines": {
+    "node": ">= 12"
+  },
+  "dependencies": {
+    "lodash.range": "^3.2.0"
+  },
+  "devDependencies": {
+    "@drom/eslint-config": "^0.10.0",
+    "browserify": "^17.0.0",
+    "chai": "^4.1.2",
+    "eslint": "^8.3.0",
+    "mocha": "^9.1.3",
+    "nyc": "^15.1.0"
+  },
+  "eslintConfig": {
+    "extends": "@drom/eslint-config/eslint4/node8"
+  }
+}
