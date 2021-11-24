@@ -28,6 +28,8 @@
     "node": ">= 12"
   },
   "dependencies": {
+    "chokidar": "^3.5.2",
+    "commander": "^8.3.0",
     "lodash.range": "^3.2.0"
   },
   "devDependencies": {

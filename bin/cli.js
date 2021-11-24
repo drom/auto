@@ -3,52 +3,12 @@
 
 const process = require('process');
 const path = require('path');
-const { readFile, writeFile, watch } = require('fs/promises');
+const { readFile, writeFile, stat } = require('fs/promises');
 const { setTimeout } = require('timers/promises');
 const lib = require('../lib/');
 const range = require('lodash.range');
-
-const getArguments = async () => {
-  const res = [];
-  if (process.argv.length < 3) {
-    throw new Error('tool expects >= 1 arguments, got: ' + (process.argv.length - 2));
-  }
-  for (let i = 2; i < process.argv.length; i++) {
-    const arg = process.argv[i];
-    const pat = path.resolve(process.cwd(), arg);
-    res.push(pat);
-  }
-  return res;
-};
-
-
-const parse = (src) => {
-  const cells = [];
-  let str = src;
-  while (true) {
-    const idx0 = str.search(/\/\*/);
-    if (idx0 === -1) {
-      cells.push({kind: 'body', src: str});
-      break;
-    }
-    if (idx0 > 0) {
-      const chunk = str.slice(0, idx0);
-      cells.push({kind: 'body', src: chunk});
-    }
-    str = str.slice(idx0 + 2);
-    const idx1 = str.search(/\*\//);
-    if (idx1 === -1) {
-      (cells[cells.length - 1]).body += '/*' + str;
-      break;
-    }
-    if (idx1 > 0) {
-      const chunk = str.slice(0, idx1);
-      cells.push({kind: 'meta', src: chunk});
-    }
-    str = str.slice(idx1 + 2);
-  }
-  return cells;
-};
+const { program } = require('commander');
+const chokidar = require('chokidar');
 
 const update = (cells) => {
   const $ = {};
@@ -88,28 +48,52 @@ return (function (lib) {
   }
 };
 
-const main = async () => {
-  const args = await getArguments();
+const readModifyWrite = async (filename, timeout) => {
+  const src = await readFile(filename, {encoding: 'utf8'});
+  const cells = lib.parse(src);
+  update(cells);
+  const dst = cells.map(cell =>
+    (cell.kind === 'meta')
+      ? '/*' + cell.src + '*/'
+      : cell.src
+  ).join('');
+  await setTimeout(timeout);
+  await writeFile(filename, dst);
+};
 
-  for (const filename of args) {
-    for (let i = 0; i < 100000; i++) {
-      const ac = new AbortController();
-      const { signal } = ac;
-      const watcher = watch(filename, { signal });
-      await watcher.next();
-      ac.abort();
-      const src = await readFile(filename, {encoding: 'utf8'});
-      const cells = parse(src);
-      update(cells);
-      const dst = cells.map(cell =>
-        (cell.kind === 'meta')
-          ? '/*' + cell.src + '*/'
-          : cell.src
-      ).join('');
-      // console.log(cells);
-      await setTimeout(300);
-      await writeFile(filename, dst);
-      // console.log(i);
+const main = async () => {
+  program
+    .option('-w, --watch', 'keep watching')
+    .parse(process.argv);
+
+  const opts = program.opts();
+
+  const watcher = chokidar.watch(program.args, {
+    ignored: /(^|[\/\\])\../, // ignore dotfiles
+    persistent: true
+  });
+
+  if (opts.watch) {
+    watcher.on('change', async (filename) => {
+      console.log(`File ${filename} changed`);
+      await watcher.unwatch(filename);
+      await readModifyWrite(filename, 100);
+      watcher.add(filename);
+    });
+  } else {
+    await setTimeout(100);
+    const watchedPaths = watcher.getWatched();
+    watcher.close();
+    const paths = Object.keys(watchedPaths);
+    for (const pathKey of paths) {
+      const points = watchedPaths[pathKey];
+      for (const point of points) {
+        const filename = path.resolve(pathKey, point);
+        if ((await stat(filename)).isFile()) {
+          console.log(filename);
+          await readModifyWrite(filename, 10);
+        }
+      }
     }
   }
 };

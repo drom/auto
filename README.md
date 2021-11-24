@@ -10,6 +10,14 @@ npm i autodrom
 
 ## CLI use
 
+Process multiple files, folders, globs
+
 ```
-autodrom FILE-TO-WATCH.v
+autodrom <FILE> <DIR> <GLOB>
+```
+
+Watch multiple files, folders, globs
+
+```
+autodrom --watch <FILE> <DIR> <GLOB>
 ```
