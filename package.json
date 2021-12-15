@@ -22,12 +22,14 @@
     "bin"
   ],
   "scripts": {
-    "test": "eslint lib"
+    "test": "eslint lib bin"
   },
   "engines": {
-    "node": ">= 12"
+    "node": ">=12"
   },
   "dependencies": {
+    "@hpcc-js/wasm": "^1.12.7",
+    "@wavedrom/fsm": "0.1.1",
     "chokidar": "^3.5.2",
     "commander": "^8.3.0",
     "lodash.range": "^3.2.0"
@@ -41,6 +43,9 @@
     "nyc": "^15.1.0"
   },
   "eslintConfig": {
-    "extends": "@drom/eslint-config/eslint4/node8"
+    "extends": "@drom/eslint-config/eslint4/node8",
+    "parserOptions": {
+      "ecmaVersion": 2020
+    }
   }
 }
