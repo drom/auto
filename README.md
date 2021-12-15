@@ -21,3 +21,13 @@ Watch multiple files, folders, globs
 ```
 npx autodrom --watch ...<FILE, DIR, GLOB>
 ```
+
+### For other Image formats
+
+```
+inkscape examples/quadrature.v0.svg --export-type=wmf -o examples/quadrature.v0.wmf
+```
+
+Supported types:
+
+svg, png, ps, eps, pdf, emf, wmf, xaml
