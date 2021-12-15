@@ -2,22 +2,22 @@
 
 Automatic verilog from comments
 
-## Install
-
-```
-npm i autodrom
-```
-
 ## CLI use
 
 Process multiple files, folders, globs
 
 ```
-autodrom <FILE> <DIR> <GLOB>
+npx autodrom ...<FILE, DIR, GLOB>
+```
+
+Create SVG diagrams
+
+```
+npx autodrom --svg ...<FILE, DIR, GLOB>
 ```
 
 Watch multiple files, folders, globs
 
 ```
-autodrom --watch <FILE> <DIR> <GLOB>
+npx autodrom --watch ...<FILE, DIR, GLOB>
 ```
