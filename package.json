@@ -15,7 +15,7 @@
   },
   "main": "lib",
   "bin": {
-    "autodrom": "bin/cli.js"
+    "autodrom": "bin/autodrom.js"
   },
   "files": [
     "lib",
