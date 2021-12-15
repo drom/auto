@@ -3,8 +3,11 @@
 
 const process = require('process');
 const path = require('path');
-const { readFile, writeFile, stat } = require('fs/promises');
-const { setTimeout } = require('timers/promises');
+const { readFile, writeFile, stat } = require('fs').promises;
+const timers = require('timers');
+const util = require('util');
+
+const setTimeout = util.promisify(timers.setTimeout);
 
 const { program } = require('commander');
 const chokidar = require('chokidar');
