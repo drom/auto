@@ -2,7 +2,7 @@
 
 ### Quadrature encoder FSM
 
-[quadrature.v](quadrature.v)
+[quadrature.v](quadrature.v#L7-L20)
 
 ![](quadrature.v0.svg)
 
