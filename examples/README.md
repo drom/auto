@@ -8,7 +8,7 @@
 
 ### JTAG FSM
 
-[jtag.v](jtag.v)
+[jtag.v](jtag.v#L6-L49)
 
 ![](jtag.v0.svg)
 
