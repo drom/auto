@@ -8,7 +8,7 @@ module quadrature (
   clock: 'clk',
   asyncReset: '~reset_n',
   cond: '{a, b}',
-  draw: 'dot', // circo, dot
+  draw: 'circo', // circo, dot
   ascii: true,
   states: {
     s00: {s01: "2'b01", s10: "2'b10", err: "2'b11"},
