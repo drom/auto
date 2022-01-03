@@ -30,6 +30,7 @@ const readModifyWrite = async (filename, opts, graphviz, timeout) => {
     const svgs = lib.extractSVG(graphviz, cells);
     for (let i = 0; i < svgs.length; i++) {
       await writeFile(filename + i + '.svg', svgs[i]);
+      // console.log('end svg');
     }
   }
 
@@ -37,6 +38,8 @@ const readModifyWrite = async (filename, opts, graphviz, timeout) => {
 
   await setTimeout(timeout);
   await writeFile(filename, dst);
+  await setTimeout(timeout);
+  // console.log('end rw');
 };
 
 const main = async () => {
@@ -44,7 +47,7 @@ const main = async () => {
 
   program
     .option('-w, --watch', 'keep watching')
-    .option('-s. --svg', 'generate SVG files')
+    .option('-s, --svg', 'generate SVG files')
     .parse(process.argv);
 
   const opts = program.opts();
@@ -58,7 +61,7 @@ const main = async () => {
     watcher.on('change', async (filename) => {
       console.log(`File ${filename} changed`);
       await watcher.unwatch(filename);
-      await readModifyWrite(filename, opts, graphviz, 100);
+      await readModifyWrite(filename, opts, graphviz, 200);
       watcher.add(filename);
     });
   } else {
