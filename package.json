@@ -1,6 +1,6 @@
 {
   "name": "autodrom",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "auto verilog from comments",
   "author": "Aliaksei Chapyzhenka",
   "license": "MIT",
