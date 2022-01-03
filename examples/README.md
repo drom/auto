@@ -7,14 +7,15 @@
   clock: 'clk',
   asyncReset: '~reset_n',
   cond: '{a, b}',
-  draw: 'circo', // circo, dot
+  draw: 'dot', // circo, dot
   ascii: true,
   states: {
-    s00: {s01: "2'b01", s10: "2'b10", err: "2'b11"},
-    s01: {s11: "2'b11", s00: "2'b00", err: "2'b10"},
-    s11: {s10: "2'b10", s01: "2'b01", err: "2'b00"},
-    s10: {s00: "2'b00", s11: "2'b11", err: "2'b01"},
-    err: {}
+    start: {s00: "2'b00", s01: "2'b01", s11: "2'b11", s10: "2'b10"},
+    s00:   {s01: "2'b01", s10: "2'b10", error: "2'b11"},
+    s01:   {s11: "2'b11", s00: "2'b00", error: "2'b10"},
+    s11:   {s10: "2'b10", s01: "2'b01", error: "2'b00"},
+    s10:   {s00: "2'b00", s11: "2'b11", error: "2'b01"},
+    error: {}
   }
 }
 ```
