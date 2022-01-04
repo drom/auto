@@ -75,3 +75,55 @@ In Verilog: [quadrature.v](quadrature.v#L7-L20)
 ![](jtag.v0.svg)
 
 In Verilog: [jtag.v](jtag.v#L6-L49)
+
+### I2C Slave FSM
+
+```js
+{
+  regs: {
+    started: 1,
+    bit_cnt: {width: 8, init: 8},
+    phase: 2 // width
+  },
+  states: [{
+    name: 'begin',
+    next: [
+      {name: 'ready', cond: "1'b1", act: {started: "1'b1"}}
+    ]
+  }, {
+    name: 'ready',
+    next: {
+      start: 'ena'
+    }
+  }, {
+    name: 'start',
+    next: {
+      command: "1'b1"
+    }
+  }, {
+    name: 'command',
+    onEnter: {
+      bit_cnt: 8,
+      phase: 1
+    },
+    next: [
+      {name: 'slv_ack1', cond: 'bit_cnt == 0'},
+      {name: 'command',  cond: 'bit_cnt != 0', act: {bit_cnt: 'bit_cnt - 1'}}
+    ]
+  }, {
+    name: 'slv_ack1',
+    next: [
+      {name: 'wr', cond: "rw == 0"},
+      {name: 'rd', cond: "rw == 1"}
+    ]
+  }, {
+    name: 'wr', onEnter: {phase: 2}
+  }, {
+    name: 'rd', onEnter: {phase: 3}
+  }]
+}
+```
+
+![](i2c_slave.v0.svg)
+
+In Verilog: [i2c_slave.v](i2c_slave.v#L6-L48)
