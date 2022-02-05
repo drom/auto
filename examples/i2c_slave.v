@@ -10,9 +10,9 @@ module i2c_slave (
     phase: 2 // width
   },
   states: [{
-    name: 'begin',
+    name: 'begin', style: 'filled,rounded', fillcolor: '#dddddd',
     next: [
-      {name: 'ready', cond: "1'b1", act: {started: "1'b1"}}
+      {name: 'ready', cond: "1'b1", actions: {started: "1'b1"}}
     ]
   }, {
     name: 'ready',
@@ -32,7 +32,7 @@ module i2c_slave (
     },
     next: [
       {name: 'slv_ack1', cond: 'bit_cnt == 0'},
-      {name: 'command',  cond: 'bit_cnt != 0', act: {bit_cnt: 'bit_cnt - 1'}}
+      {name: 'command',  cond: 'bit_cnt != 0', actions: {bit_cnt: 'bit_cnt - 1'}}
     ]
   }, {
     name: 'slv_ack1',
@@ -45,8 +45,7 @@ module i2c_slave (
   }, {
     name: 'rd', onEnter: {phase: 3}
   }]
-}) */
-// ***** THIS TEXT IS AUTOMATICALY GENERATED, DO NOT EDIT *****
+}) */// ***** THIS TEXT IS AUTOMATICALY GENERATED, DO NOT EDIT *****
 reg [2:0] FSM_state, FSM_next;
 reg started;
 reg [7:0] bit_cnt;
@@ -135,7 +134,6 @@ always @(posedge clock)
     endcase
   end
 
-// ***** END OF AUTOMATICALY GENERATED TEXT, DO NOT EDIT *****
-/* fin */
+// ***** END OF AUTOMATICALY GENERATED TEXT, DO NOT EDIT *****/* fin */
 
 endmodule

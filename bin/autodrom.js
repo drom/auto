@@ -18,7 +18,7 @@ const lib = require('../lib/');
 const readModifyWrite = async (filename, opts, graphviz, timeout) => {
   const src = await readFile(filename, {encoding: 'utf8'});
   const cells = lib.parse(src);
-  lib.update(cells);
+  lib.update(cells, path.join(process.cwd(), filename));
 
   const dst = cells.map(cell =>
     (cell.kind === 'meta')
