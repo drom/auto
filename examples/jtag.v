@@ -5,7 +5,7 @@ module jtag (
 
 /* fsm({
   name: 'J',
-  cond: 'tms',
+  condition: 'tms',
   clock: 'tck',
   syncReset: 'treset',
   states: [
@@ -47,7 +47,7 @@ module jtag (
     {name: 'updateIR',  next: {runTest: 0, selectIR: 1}}
   ]
 }) */
-// ***** THIS TEXT IS AUTOMATICALY GENERATED, DO NOT EDIT *****
+// ***** THIS TEXT IS AUTOMATICALLY GENERATED, DO NOT EDIT *****
 reg [3:0] J_state, J_next;
 
 
@@ -170,7 +170,7 @@ always @(posedge tck)
   if (treset) J_state <= J_testLogicReset;
   else        J_state <= J_next;
 
-// ***** END OF AUTOMATICALY GENERATED TEXT, DO NOT EDIT *****
+// ***** END OF AUTOMATICALLY GENERATED TEXT, DO NOT EDIT *****
 /* fin */
 
 assign outState = J_state;

@@ -7,7 +7,7 @@ module quadrature (
 /* fsm({
   clock: 'clk',
   asyncReset: '~reset_n',
-  cond: '{a, b}',
+  condition: '{a, b}',
   draw: 'dot', // circo, dot
   ascii: true,
   states: {
@@ -19,7 +19,7 @@ module quadrature (
     error: {}
   }
 }) */
-// ***** THIS TEXT IS AUTOMATICALY GENERATED, DO NOT EDIT *****
+// ***** THIS TEXT IS AUTOMATICALLY GENERATED, DO NOT EDIT *****
 reg [2:0] FSM_state, FSM_next;
 
 
@@ -103,7 +103,7 @@ always @(*)
     default   : FSM_state_ascii = "%Erro";
   endcase
 
-// ***** END OF AUTOMATICALY GENERATED TEXT, DO NOT EDIT *****
+// ***** END OF AUTOMATICALLY GENERATED TEXT, DO NOT EDIT *****
 /* fin */
 
 always @(posedge clk or negedge reset_n)

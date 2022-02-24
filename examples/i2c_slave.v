@@ -4,7 +4,7 @@ module i2c_slave (
 );
 
 /* fsm({
-  regs: {
+  registers: {
     started: 1,
     bit_cnt: {width: 8, init: 8},
     phase: 2 // width
@@ -12,7 +12,7 @@ module i2c_slave (
   states: [{
     name: 'begin', style: 'filled,rounded', fillcolor: '#dddddd',
     next: [
-      {name: 'ready', cond: "1'b1", actions: {started: "1'b1"}}
+      {name: 'ready', condition: "1'b1", actions: {started: "1'b1"}}
     ]
   }, {
     name: 'ready',
@@ -31,21 +31,22 @@ module i2c_slave (
       phase: 1
     },
     next: [
-      {name: 'slv_ack1', cond: 'bit_cnt == 0'},
-      {name: 'command',  cond: 'bit_cnt != 0', actions: {bit_cnt: 'bit_cnt - 1'}}
+      {name: 'slv_ack1', condition: 'bit_cnt == 0'},
+      {name: 'command',  condition: 'bit_cnt != 0', actions: {bit_cnt: 'bit_cnt - 1'}}
     ]
   }, {
     name: 'slv_ack1',
     next: [
-      {name: 'wr', cond: "rw == 0"},
-      {name: 'rd', cond: "rw == 1"}
+      {name: 'wr', condition: "rw == 0"},
+      {name: 'rd', condition: "rw == 1"}
     ]
   }, {
     name: 'wr', onEnter: {phase: 2}
   }, {
     name: 'rd', onEnter: {phase: 3}
   }]
-}) */// ***** THIS TEXT IS AUTOMATICALY GENERATED, DO NOT EDIT *****
+}) */
+// ***** THIS TEXT IS AUTOMATICALLY GENERATED, DO NOT EDIT *****
 reg [2:0] FSM_state, FSM_next;
 reg started;
 reg [7:0] bit_cnt;
@@ -134,6 +135,7 @@ always @(posedge clock)
     endcase
   end
 
-// ***** END OF AUTOMATICALY GENERATED TEXT, DO NOT EDIT *****/* fin */
+// ***** END OF AUTOMATICALLY GENERATED TEXT, DO NOT EDIT *****
+/* fin */
 
 endmodule
