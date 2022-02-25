@@ -50,12 +50,13 @@ wire FSM_s10_s00   = ((FSM_state == FSM_s10  ) & (2'b00 == {a, b}));
 wire FSM_s10_s11   = ((FSM_state == FSM_s10  ) & (2'b11 == {a, b}));
 wire FSM_s10_error = ((FSM_state == FSM_s10  ) & (2'b01 == {a, b}));
 
-// FSM state enter conditions
-wire FSM_s00_onEnter   = (FSM_start_s00 | FSM_s01_s00 | FSM_s10_s00);
-wire FSM_s01_onEnter   = (FSM_start_s01 | FSM_s00_s01 | FSM_s11_s01);
-wire FSM_s11_onEnter   = (FSM_start_s11 | FSM_s01_s11 | FSM_s10_s11);
-wire FSM_s10_onEnter   = (FSM_start_s10 | FSM_s00_s10 | FSM_s11_s10);
-wire FSM_error_onEnter = (FSM_s00_error | FSM_s01_error | FSM_s11_error | FSM_s10_error);
+// FSM state entry conditions
+wire FSM_s00_onEntry   = (FSM_start_s00 | FSM_s01_s00 | FSM_s10_s00);
+wire FSM_s01_onEntry   = (FSM_start_s01 | FSM_s00_s01 | FSM_s11_s01);
+wire FSM_s11_onEntry   = (FSM_start_s11 | FSM_s01_s11 | FSM_s10_s11);
+wire FSM_s10_onEntry   = (FSM_start_s10 | FSM_s00_s10 | FSM_s11_s10);
+wire FSM_error_onEntry = (FSM_s00_error | FSM_s01_error | FSM_s11_error | FSM_s10_error);
+
 // FSM state exit conditions
 wire FSM_start_onExit  = (FSM_start_s00 | FSM_start_s01 | FSM_start_s11 | FSM_start_s10);
 wire FSM_s00_onExit    = (FSM_s00_s01 | FSM_s00_s10 | FSM_s00_error);
@@ -63,6 +64,14 @@ wire FSM_s01_onExit    = (FSM_s01_s11 | FSM_s01_s00 | FSM_s01_error);
 wire FSM_s11_onExit    = (FSM_s11_s10 | FSM_s11_s01 | FSM_s11_error);
 wire FSM_s10_onExit    = (FSM_s10_s00 | FSM_s10_s11 | FSM_s10_error);
 // FSM_error state has no exit
+
+// FSM state self conditions
+wire FSM_start_onSelf  = (FSM_state == FSM_start) & ~FSM_start_onExit;
+wire FSM_s00_onSelf    = (FSM_state == FSM_s00  ) & ~FSM_s00_onExit;
+wire FSM_s01_onSelf    = (FSM_state == FSM_s01  ) & ~FSM_s01_onExit;
+wire FSM_s11_onSelf    = (FSM_state == FSM_s11  ) & ~FSM_s11_onExit;
+wire FSM_s10_onSelf    = (FSM_state == FSM_s10  ) & ~FSM_s10_onExit;
+wire FSM_error_onSelf  = (FSM_state == FSM_error) & ~FSM_error_onExit;
 
 // FSM next state select
 always @(*) begin : FSM_next_select

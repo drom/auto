@@ -6,7 +6,7 @@
 {
   clock: 'clk',
   asyncReset: '~reset_n',
-  cond: '{a, b}',
+  condition: '{a, b}',
   draw: 'dot', // circo, dot
   ascii: true,
   states: {
@@ -29,7 +29,7 @@ In Verilog: [quadrature.v](quadrature.v#L7-L20)
 ```js
 {
   name: 'J',
-  cond: 'tms',
+  condition: 'tms',
   clock: 'tck',
   syncReset: 'treset',
   states: [
@@ -80,15 +80,15 @@ In Verilog: [jtag.v](jtag.v#L6-L49)
 
 ```js
 {
-  regs: {
+  registers: {
     started: 1,
     bit_cnt: {width: 8, init: 8},
     phase: 2 // width
   },
   states: [{
-    name: 'begin',
+    name: 'begin', style: 'filled,rounded', fillcolor: '#dddddd',
     next: [
-      {name: 'ready', cond: "1'b1", act: {started: "1'b1"}}
+      {name: 'ready', condition: "1'b1", actions: {started: "1'b1"}}
     ]
   }, {
     name: 'ready',
@@ -102,24 +102,24 @@ In Verilog: [jtag.v](jtag.v#L6-L49)
     }
   }, {
     name: 'command',
-    onEnter: {
+    onEntry: {
       bit_cnt: 8,
       phase: 1
     },
     next: [
-      {name: 'slv_ack1', cond: 'bit_cnt == 0'},
-      {name: 'command',  cond: 'bit_cnt != 0', act: {bit_cnt: 'bit_cnt - 1'}}
+      {name: 'slv_ack1', condition: 'bit_cnt == 0'},
+      {name: 'command',  condition: 'bit_cnt != 0', actions: {bit_cnt: 'bit_cnt - 1'}}
     ]
   }, {
     name: 'slv_ack1',
     next: [
-      {name: 'wr', cond: "rw == 0"},
-      {name: 'rd', cond: "rw == 1"}
+      {name: 'wr', condition: "rw == 0"},
+      {name: 'rd', condition: "rw == 1"}
     ]
   }, {
-    name: 'wr', onEnter: {phase: 2}
+    name: 'wr', onEntry: {phase: 2}, onExit: {phase: 42}
   }, {
-    name: 'rd', onEnter: {phase: 3}
+    name: 'rd', onExit: {phase: 3}, onSelf: {phase: 33}
   }]
 }
 ```

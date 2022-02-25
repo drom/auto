@@ -98,23 +98,24 @@ wire J_exit2IR_shiftIR         = ((J_state == J_exit2IR       ) & (0 == tms));
 wire J_updateIR_runTest        = ((J_state == J_updateIR      ) & (0 == tms));
 wire J_updateIR_selectIR       = ((J_state == J_updateIR      ) & (1 == tms));
 
-// J state enter conditions
-wire J_runTest_onEnter        = (J_testLogicReset_runTest | J_updateDR_runTest | J_updateIR_runTest);
-wire J_selectDR_onEnter       = (J_runTest_selectDR | J_updateDR_selectDR);
-wire J_captureDR_onEnter      = (J_selectDR_captureDR);
-wire J_selectIR_onEnter       = (J_selectDR_selectIR | J_updateIR_selectIR);
-wire J_shiftDR_onEnter        = (J_captureDR_shiftDR | J_exit2DR_shiftDR);
-wire J_exit1DR_onEnter        = (J_captureDR_exit1DR | J_shiftDR_exit1DR);
-wire J_pauseDR_onEnter        = (J_exit1DR_pauseDR);
-wire J_updateDR_onEnter       = (J_exit1DR_updateDR | J_exit2DR_updateDR);
-wire J_exit2DR_onEnter        = (J_pauseDR_exit2DR);
-wire J_captureIR_onEnter      = (J_selectIR_captureIR);
-wire J_testLogicReset_onEnter = (J_selectIR_testLogicReset);
-wire J_shiftIR_onEnter        = (J_captureIR_shiftIR | J_exit2IR_shiftIR);
-wire J_exit1IR_onEnter        = (J_captureIR_exit1IR | J_shiftIR_exit1IR);
-wire J_pauseIR_onEnter        = (J_exit1IR_pauseIR);
-wire J_updateIR_onEnter       = (J_exit1IR_updateIR | J_exit2IR_updateIR);
-wire J_exit2IR_onEnter        = (J_pauseIR_exit2IR);
+// J state entry conditions
+wire J_runTest_onEntry        = (J_testLogicReset_runTest | J_updateDR_runTest | J_updateIR_runTest);
+wire J_selectDR_onEntry       = (J_runTest_selectDR | J_updateDR_selectDR);
+wire J_captureDR_onEntry      = (J_selectDR_captureDR);
+wire J_selectIR_onEntry       = (J_selectDR_selectIR | J_updateIR_selectIR);
+wire J_shiftDR_onEntry        = (J_captureDR_shiftDR | J_exit2DR_shiftDR);
+wire J_exit1DR_onEntry        = (J_captureDR_exit1DR | J_shiftDR_exit1DR);
+wire J_pauseDR_onEntry        = (J_exit1DR_pauseDR);
+wire J_updateDR_onEntry       = (J_exit1DR_updateDR | J_exit2DR_updateDR);
+wire J_exit2DR_onEntry        = (J_pauseDR_exit2DR);
+wire J_captureIR_onEntry      = (J_selectIR_captureIR);
+wire J_testLogicReset_onEntry = (J_selectIR_testLogicReset);
+wire J_shiftIR_onEntry        = (J_captureIR_shiftIR | J_exit2IR_shiftIR);
+wire J_exit1IR_onEntry        = (J_captureIR_exit1IR | J_shiftIR_exit1IR);
+wire J_pauseIR_onEntry        = (J_exit1IR_pauseIR);
+wire J_updateIR_onEntry       = (J_exit1IR_updateIR | J_exit2IR_updateIR);
+wire J_exit2IR_onEntry        = (J_pauseIR_exit2IR);
+
 // J state exit conditions
 wire J_testLogicReset_onExit  = (J_testLogicReset_runTest);
 wire J_runTest_onExit         = (J_runTest_selectDR);
@@ -132,6 +133,24 @@ wire J_exit1IR_onExit         = (J_exit1IR_pauseIR | J_exit1IR_updateIR);
 wire J_pauseIR_onExit         = (J_pauseIR_exit2IR);
 wire J_exit2IR_onExit         = (J_exit2IR_updateIR | J_exit2IR_shiftIR);
 wire J_updateIR_onExit        = (J_updateIR_runTest | J_updateIR_selectIR);
+
+// J state self conditions
+wire J_testLogicReset_onSelf  = (J_state == J_testLogicReset) & ~J_testLogicReset_onExit;
+wire J_runTest_onSelf         = (J_state == J_runTest       ) & ~J_runTest_onExit;
+wire J_selectDR_onSelf        = (J_state == J_selectDR      ) & ~J_selectDR_onExit;
+wire J_captureDR_onSelf       = (J_state == J_captureDR     ) & ~J_captureDR_onExit;
+wire J_shiftDR_onSelf         = (J_state == J_shiftDR       ) & ~J_shiftDR_onExit;
+wire J_exit1DR_onSelf         = (J_state == J_exit1DR       ) & ~J_exit1DR_onExit;
+wire J_pauseDR_onSelf         = (J_state == J_pauseDR       ) & ~J_pauseDR_onExit;
+wire J_exit2DR_onSelf         = (J_state == J_exit2DR       ) & ~J_exit2DR_onExit;
+wire J_updateDR_onSelf        = (J_state == J_updateDR      ) & ~J_updateDR_onExit;
+wire J_selectIR_onSelf        = (J_state == J_selectIR      ) & ~J_selectIR_onExit;
+wire J_captureIR_onSelf       = (J_state == J_captureIR     ) & ~J_captureIR_onExit;
+wire J_shiftIR_onSelf         = (J_state == J_shiftIR       ) & ~J_shiftIR_onExit;
+wire J_exit1IR_onSelf         = (J_state == J_exit1IR       ) & ~J_exit1IR_onExit;
+wire J_pauseIR_onSelf         = (J_state == J_pauseIR       ) & ~J_pauseIR_onExit;
+wire J_exit2IR_onSelf         = (J_state == J_exit2IR       ) & ~J_exit2IR_onExit;
+wire J_updateIR_onSelf        = (J_state == J_updateIR      ) & ~J_updateIR_onExit;
 
 // J next state select
 always @(*) begin : J_next_select
