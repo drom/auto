@@ -52,12 +52,11 @@ const main = async () => {
 
   const opts = program.opts();
 
-  const watcher = chokidar.watch(program.args, {
-    ignored: /(^|[/\\])\../, // ignore dotfiles
-    persistent: true
-  });
-
   if (opts.watch) {
+    const watcher = chokidar.watch(program.args, {
+      ignored: /(^|[/\\])\../, // ignore dotfiles
+      persistent: true
+    });
     watcher.on('change', async (filename) => {
       console.log(`File ${filename} changed`);
       await watcher.unwatch(filename);
@@ -65,18 +64,11 @@ const main = async () => {
       watcher.add(filename);
     });
   } else {
-    await setTimeout(100);
-    const watchedPaths = watcher.getWatched();
-    watcher.close();
-    const paths = Object.keys(watchedPaths);
-    for (const pathKey of paths) {
-      const points = watchedPaths[pathKey];
-      for (const point of points) {
-        const filename = path.resolve(pathKey, point);
-        if ((await stat(filename)).isFile()) {
-          console.log(filename);
-          await readModifyWrite(filename, opts, graphviz, 10);
-        }
+    const filenames = program.args.map(e => path.join(process.cwd(), e));
+    for (const filename of filenames) {
+      if ((await stat(filename)).isFile()) {
+        console.log(filename);
+        await readModifyWrite(filename, opts, graphviz, 10);
       }
     }
   }
