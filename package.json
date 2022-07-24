@@ -4,14 +4,14 @@
   "description": "auto verilog from comments",
   "author": "Aliaksei Chapyzhenka",
   "license": "MIT",
-  "homepage": "https://github.com/drom/autodrom#readme",
+  "homepage": "https://github.com/drom/auto#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/drom/autodrom.git"
+    "url": "git+https://github.com/drom/auto.git"
   },
   "keywords": [],
   "bugs": {
-    "url": "https://github.com/drom/autodrom/issues"
+    "url": "https://github.com/drom/auto/issues"
   },
   "main": "lib",
   "bin": {
