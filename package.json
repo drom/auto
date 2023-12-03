@@ -28,7 +28,7 @@
     "node": ">=12"
   },
   "dependencies": {
-    "@hpcc-js/wasm": "^1.12.9",
+    "@hpcc-js/wasm": "^2.15.0",
     "@wavedrom/fsm": "^0.8.1",
     "chokidar": "^3.5.2",
     "commander": "^11.1.0",
