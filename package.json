@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@hpcc-js/wasm": "^2.15.0",
-    "@wavedrom/fsm": "^0.8.1",
+    "@wavedrom/fsm": "^0.9.0",
     "chokidar": "^3.5.2",
     "commander": "^11.1.0",
     "lodash.range": "^3.2.0"
