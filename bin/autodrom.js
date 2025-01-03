@@ -9,9 +9,9 @@ const util = require('util');
 
 const setTimeout = util.promisify(timers.setTimeout);
 
-const { program } = require('commander');
+const { commander } = require('commander');
+
 const chokidar = require('chokidar');
-const hpccwasm = require('@hpcc-js/wasm');
 
 const lib = require('../lib/');
 
@@ -43,11 +43,15 @@ const readModifyWrite = async (filename, opts, graphviz, timeout) => {
 };
 
 const main = async () => {
-  const graphviz = await hpccwasm.graphvizSync();
+  const { Graphviz } = await import('@hpcc-js/wasm/graphviz');
+  const graphviz = await Graphviz.load();
+
+  const program = new commander.Command();
 
   program
     .option('-w, --watch', 'keep watching')
     .option('-s, --svg', 'generate SVG files')
+    .argument('<files...>', 'GLOB expression or file names')
     .parse(process.argv);
 
   const opts = program.opts();
