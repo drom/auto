@@ -9,7 +9,7 @@ const util = require('util');
 
 const setTimeout = util.promisify(timers.setTimeout);
 
-const { commander } = require('commander');
+const commander = require('commander');
 
 const chokidar = require('chokidar');
 
