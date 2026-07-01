@@ -2,6 +2,8 @@
 
 Automatic verilog from comments
 
+Requires Node.js >= 22.
+
 ## Install
 
 ```
@@ -37,3 +39,17 @@ inkscape examples/quadrature.v0.svg --export-type=wmf -o examples/quadrature.v0.
 Supported types:
 
 svg, png, ps, eps, pdf, emf, wmf, xaml
+
+## Development
+
+Lint (ESLint 9 flat config, [`@drom/eslint-config`](https://github.com/drom/eslint-config)):
+
+```
+npm test
+```
+
+Bundle the CLI into a single file (`dist/autodrom.cjs`) with esbuild:
+
+```
+npm run build
+```
